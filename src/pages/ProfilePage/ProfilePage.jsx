@@ -1,5 +1,5 @@
 import React, { use, useEffect } from 'react'
-import { WrapperContentProfile, WrapperHeader, WrapperInput, WrapperLabel } from './style'
+import { WrapperContentProfile, WrapperHeader, WrapperInput, WrapperLabel, WrapperUploadFile } from './style'
 import InputForm from '../../components/InputForm/InputForm'
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,6 +7,9 @@ import * as UserService from '../../services/UserService'
 import { useMutationHooks } from '../../hooks/useMutation'
 import * as message from '../../components/Messages/Messages'
 import { updateUser } from '../../redux/slices/userSlice'
+import { Button, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { getBase64 } from '../../utils'
 
 
 const ProfilePage = () => {
@@ -62,8 +65,12 @@ const ProfilePage = () => {
     const handleOnchangeAddress = (value) => {
         setAddress(value)
     }
-    const handleOnchangeAvatar = (value) => {
-        setAvatar(value)
+    const handleOnchangeAvatar = async ({fileList}) => {
+        const file = fileList[0]
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+          }
+        setAvatar(file.preview)
     }
 
     const handleUpdate = () => {
@@ -180,12 +187,16 @@ const ProfilePage = () => {
                     </WrapperInput>
                     <WrapperInput>
                         <WrapperLabel htmlFor='avatar'>Avatar</WrapperLabel>
-                        <InputForm
-                            id = 'avatar'
-                            style={{ width: '300px' }}
-                            value={avatar}
-                            onChange ={handleOnchangeAvatar}
-                        />
+                        <WrapperUploadFile onChange={handleOnchangeAvatar} maxCount={1}>
+                            <Button icon={<UploadOutlined />}>Select File</Button>
+                        </WrapperUploadFile>
+                        {avatar && (
+                            <img
+                                src={avatar}
+                                alt="avatar"
+                                style={{ width: '60px', height: '60px', borderRadius: '50%', marginTop: '10px', objectFit: 'cover' }}
+                            />
+                        )}
                         <ButtonComponent 
                             onClick={handleUpdate}
                             size={40} 

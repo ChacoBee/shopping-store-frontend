@@ -26,6 +26,7 @@
     const dispatch = useDispatch()
     const [loading, setLoading] = React.useState(false) 
     const [userName, setUserName] = React.useState('')
+    const [userAvatar, setUserAvatar] = React.useState('')
 
     const handleNavigationLogin = () => {
         navigate('/sign-in');
@@ -42,8 +43,9 @@
     useEffect(() => {
       setLoading(true)
       setUserName(user?.name)
+      setUserAvatar(user?.avatar)
       setLoading(false)
-    },[user?.name])
+    },[user?.name, user?.avatar])
 
     const handleNavigationUserInfo = () => {
       navigate('/profile-user');
@@ -74,7 +76,16 @@
           <Col span={6} style={{ display: 'flex', gap: '54px', alignItems: 'center' }}>
             <Loading isLoading={loading}>
               <WrapperHeaderAccount>
-                <UserOutlined style={{ fontSize: '30px' }} />
+                {userAvatar ? (
+                  <img src={userAvatar} alt='avatar' style={{
+                     width: '30px', 
+                     height: '30px', 
+                     borderRadius: '50%', 
+                     objectFit: 'cover'
+                  }}/>
+                ) : (
+                  <UserOutlined style={{ fontSize: '30px' }} />
+                )}
                   {user?.access_token ? (
                     <>
                       <Popover content={content} trigger="click">
