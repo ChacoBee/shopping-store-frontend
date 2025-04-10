@@ -5,10 +5,8 @@ import {StarFilled} from '@ant-design/icons'
 import logo from '../../assets/images/logo.png';
 
 
-
-
-
-const CardComponent = () => {
+const CardComponent = (props) => {
+  const {countInStock, description, image, name, price, rating, type, discount, sold} = props
   return (
     <WrapperCardStyle
         hoverable
@@ -18,16 +16,16 @@ const CardComponent = () => {
         cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
     >
         <WrapperImageStyle src = {logo} alt="logo" />
-        <StyleNameProduct>Iphone</StyleNameProduct>
+        <StyleNameProduct>{name}</StyleNameProduct>
         <WrapperReportTxt style={{marginRight: '5px'}} >
             <span>
-               <span>4.5</span><StarFilled style={{color: 'rgb(239, 214, 19)', fontSize: '12px'}} />
+               <span>{rating}</span><StarFilled style={{color: 'rgb(239, 214, 19)', fontSize: '12px'}} />
             </span>
-            <WrapperStyleTextSell> |  Sold 1000+</WrapperStyleTextSell>
+            <WrapperStyleTextSell> |  Sold {sold || 1000}</WrapperStyleTextSell>
         </WrapperReportTxt>
         <WrapperPriceText>
-            <span style={{marginRight: '10px'}} >$55</span>
-            <WrapperDiscountText>-20%</WrapperDiscountText>
+            <span style={{marginRight: '10px'}} >{price}</span>
+            <WrapperDiscountText>{discount || 5}%</WrapperDiscountText>
         </WrapperPriceText>
     </WrapperCardStyle>
   )
