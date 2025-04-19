@@ -28,6 +28,7 @@ function App() {
     if(decoded?.id) {
       handleGetDetailUser(decoded?.id, storeageData);
     }  
+    setIsLoading(false);
   }, [])
 
   const handleDecode = ()=>{
@@ -57,12 +58,12 @@ function App() {
       const res = await UserService.getDetailUser(id, token);
       dispatch(updateUser({...res?.data, access_token: token}));
     } catch (error) {
-      console.error("Error fetching user details:", error);
-    } finally {
-      setIsLoading(false);  
-    }
-  };
-  
+        console.error("Error fetching user details:", error);
+      } finally {
+        setIsLoading(false);  
+      }
+    };
+    
 
 
 

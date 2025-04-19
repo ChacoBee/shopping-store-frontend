@@ -19,7 +19,7 @@
   import { resetUser } from '../../redux/slices/userSlice'
 
 
-  const Header = () => {
+  const Header = ({isHiddenSearch = false, isHiddenCart = false}) => {
 
     const navigate = useNavigate();
     const user = useSelector((state) => state.user)
@@ -50,29 +50,37 @@
     const handleNavigationUserInfo = () => {
       navigate('/profile-user');
     }
+    const handleNavigationManageSystem = () => {
+      navigate('/system/admin');
+    }
+
     const content = (
       <div>
-        <WrapperContentPopup onClick={handleLogout}>Log Out</WrapperContentPopup>
         <WrapperContentPopup onClick={handleNavigationUserInfo}>User Info</WrapperContentPopup>
+        {user?.isAdmin &&(
+          <WrapperContentPopup onClick={handleNavigationManageSystem}>Manage System</WrapperContentPopup>
+        )}
+        <WrapperContentPopup onClick={handleLogout}>Log Out</WrapperContentPopup>
       </div>
     );
     return (
       <div style={{width: '100%', background: '#000', display: 'flex', justifyContent: 'center' }} >
-        <WrapperHeader gutter={16}>
+        <WrapperHeader gutter={16} style={{justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset'}}>
           <Col span={6}>
             <WrapperTextHeader>
               TANTANSHOPPING
             </WrapperTextHeader>
           </Col>
-          <Col span={12}>
-            <ButtonInputSearch
-              size = "large"
-              placeholder= "Search Your Items"
-              textButton = "Search"
-              variant = "borderless"
-            />
-          </Col>
-
+          {!isHiddenSearch && (
+            <Col span={12}>
+              <ButtonInputSearch
+                size = "large"
+                placeholder= "Search Your Items"
+                textButton = "Search"
+                variant = "borderless"
+              />
+            </Col>
+          )}
           <Col span={6} style={{ display: 'flex', gap: '54px', alignItems: 'center' }}>
             <Loading isLoading={loading}>
               <WrapperHeaderAccount>
@@ -103,12 +111,14 @@
                   )}       
               </WrapperHeaderAccount>
             </Loading>
-            <div>
-              <Badge count={4} size='small'>
-                <ShoppingCartOutlined style={{ fontSize: '30px', color: '#fff' }}  />
-              </Badge>
-              <WrapperTextHeaderSmall>Shopping Cart</WrapperTextHeaderSmall>
-            </div>
+            {!isHiddenCart && (
+              <div>
+                <Badge count={4} size='small'>
+                  <ShoppingCartOutlined style={{ fontSize: '30px', color: '#fff' }}  />
+                </Badge>
+                <WrapperTextHeaderSmall>Shopping Cart</WrapperTextHeaderSmall>
+              </div>
+            )}
           </Col>
         </WrapperHeader>
       </div>
