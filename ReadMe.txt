@@ -227,3 +227,12 @@ tạo ProductSetvice trong folder services
 #36 Dựng khung cho trang admin
 AdminPage.js -> khi đăng nhập bằng tài khoản admin thỳ sẽ thêm 1 mục lục là quản lý hệ thống -> vô Header -> xây dưng AdminPage
 vô ant design lấy thằng navigation -> export funtion getItem torng utils.js
+
+#37 Xây dựng UI cho trang admin
+tạo ra AdminUser và AdminProduct trong components
+renderPage trong AdminPage dùng switch case để khi nào ấn vô option nào thỳ sẽ hiện ra trang tương ứng, dưới phần body thêm {renderPage(keySelected)}
+
+bắt đầu UI cho AdminUser
+        Đầu tiên là h1
+        Sau đó tạo button(Lấy của ant design) : chỉnh CSS cho đẹp hơn   
+        Sau đó tạo 1 table(lấy từ ant design): tạo table component folder
