@@ -236,3 +236,14 @@ bắt đầu UI cho AdminUser
         Đầu tiên là h1
         Sau đó tạo button(Lấy của ant design) : chỉnh CSS cho đẹp hơn   
         Sau đó tạo 1 table(lấy từ ant design): tạo table component folder
+
+
+#38 Tích hợp api tạo mới sản phẩm
+        Lên ant design kiếm thằng modal gắn vào AdminProduct
+        add thàng Form trong ant design bên trong Modal -> điểu chỉnh 1 số css 
+        r vô thằng ProfilePage coppy thằng WrapperUploadFile vô thằng AdminProduct
+        vô ProductService tạo 1 route mới là createProduct r gắn cái  createProduct vào onFinish trong AdminProduct
+        thêm    import * as ProductService from '../../services/ProductService'
+                import { useMutationHooks } from '../../hooks/useMutation' vào AdminProduct
+        tạo 1 const mutation trong AdminProduct
+        xử phí mutation cho create product (xem video từ tầm phút 25 trở đi)
