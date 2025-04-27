@@ -247,3 +247,5 @@ bắt đầu UI cho AdminUser
                 import { useMutationHooks } from '../../hooks/useMutation' vào AdminProduct
         tạo 1 const mutation trong AdminProduct
         xử phí mutation cho create product (xem video từ tầm phút 25 trở đi)
+
+#39 Hoàn thiện Table và get data
