@@ -1,5 +1,5 @@
 import axios from "axios";
-export const axiosJwt = axios.create();
+import { axiosJwt } from "./UserService";
 
 export const getAllProduct = async () => {
     try {
@@ -18,3 +18,25 @@ export const createProduct = async (data) => {
         throw error;
     }
 }
+
+export const getDetailsProduct = async (id) => {
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/product/get-details/${id}`);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const updateProduct = async (id, access_token, data) => {
+    try {
+        const res = await axiosJwt.put(`${process.env.REACT_APP_BACKEND_API_URL}/product/update/${id}`, data, {
+            headers: {
+                token: `Bearer ${access_token}`,
+            },
+        });
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+};

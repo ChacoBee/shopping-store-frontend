@@ -248,4 +248,8 @@ bắt đầu UI cho AdminUser
         tạo 1 const mutation trong AdminProduct
         xử phí mutation cho create product (xem video từ tầm phút 25 trở đi)
 
-#39 Hoàn thiện Table và get data
+#39 Hoàn thiện Table và get data: xemvideo về cách để fetch data từ product để hiện lên table trong AdminProduct
+
+#40 Update sản phẩm:
+        add thằng onRow của table trong antdesign vô AdminProduct: tạo     const [rowSelected, setRowSelected] = useState('') cho cái onRow(cho onclick đó)
+        tạo thằng Drawer folder trong component( lấy từ ant design: basic one )
