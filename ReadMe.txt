@@ -253,3 +253,10 @@ bắt đầu UI cho AdminUser
 #40 Update sản phẩm:
         add thằng onRow của table trong antdesign vô AdminProduct: tạo     const [rowSelected, setRowSelected] = useState('') cho cái onRow(cho onclick đó)
         tạo thằng Drawer folder trong component( lấy từ ant design: basic one )
+
+#41 Delete sản phẩm
+thêm onSettled và ... ở rest trong mutationUpdate để hiển thiện details mới của product sau khi update, gắn cái thằng onSettled vào sau mỗi cái mutate để refresh lại page sau mỗi lần mutate
+---xử lý thằng Delete 
+tạo ra 1 modal component mới, tạo 1 useState mới cho delete, tạo handleCancelDelete
+vô productserivce tạo deleteproduct 
+tạo ra 1 thằng mutation mới mutationDeleted và useEffect cho nó -> sau đó tạo 1 thằng const muatationDelete để dán cái deleteProduct trong ProductService vào
