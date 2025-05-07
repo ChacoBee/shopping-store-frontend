@@ -260,3 +260,8 @@ thêm onSettled và ... ở rest trong mutationUpdate để hiển thiện detai
 tạo ra 1 modal component mới, tạo 1 useState mới cho delete, tạo handleCancelDelete
 vô productserivce tạo deleteproduct 
 tạo ra 1 thằng mutation mới mutationDeleted và useEffect cho nó -> sau đó tạo 1 thằng const muatationDelete để dán cái deleteProduct trong ProductService vào
+
+#42 Filter, search, sorter và panigated với ant-design
+cho sorter, kiếm thằng column trong AdminProduct r thêm sorter: (a, b) => a.name.length - b.name.length,
+tiếp theo là thằng search: vô ant design kiếm thằng Customized filter panel r gắn vô AdminProduct, xong lấy getColumnSearchProps ở chỗ nào muốn search (...getColumnSearchProps('name))
+tiếp theo là filter: lấy từ thằng Filter in Tree trong antd xong gán cái filter đó vào chỗ column, chỗ nào muốn filter thỳ gán vô
