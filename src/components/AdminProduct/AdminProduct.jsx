@@ -466,7 +466,7 @@ const AdminProduct = () => {
                 }}
             />
         </div>
-        <ModalComponent title="Add Products" open={isModalOpen}  onCancel={handleCancel} footer={null} okText='' okButtonProps={{ style: { display: 'none' } }}>
+        <ModalComponent forceRender title="Add Products" open={isModalOpen}  onCancel={handleCancel} footer={null} okText='' okButtonProps={{ style: { display: 'none' } }}>
 
                 <Form
                     name="basic"

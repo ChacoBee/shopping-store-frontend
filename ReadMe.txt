@@ -265,3 +265,5 @@ tạo ra 1 thằng mutation mới mutationDeleted và useEffect cho nó -> sau �
 cho sorter, kiếm thằng column trong AdminProduct r thêm sorter: (a, b) => a.name.length - b.name.length,
 tiếp theo là thằng search: vô ant design kiếm thằng Customized filter panel r gắn vô AdminProduct, xong lấy getColumnSearchProps ở chỗ nào muốn search (...getColumnSearchProps('name))
 tiếp theo là filter: lấy từ thằng Filter in Tree trong antd xong gán cái filter đó vào chỗ column, chỗ nào muốn filter thỳ gán vô
+
+#43 Xử lý tương tự dữ liệu bên user
