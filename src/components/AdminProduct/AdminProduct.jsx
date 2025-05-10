@@ -553,7 +553,7 @@ const AdminProduct = () => {
                 </Form>
 
         </ModalComponent>
-        <Drawer title = 'Product' open={isOpenDrawer} onClose={() => setIsOpenDrawer(false)} width= "90%">
+        <Drawer forceRender title = 'Product' open={isOpenDrawer} onClose={() => setIsOpenDrawer(false)} width= "90%">
                 <Form
                     name="basic"
                     labelCol={{ span: 6 }}

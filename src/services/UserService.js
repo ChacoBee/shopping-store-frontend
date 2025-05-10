@@ -21,9 +21,34 @@ export const getDetailUser = async (id, access_token) => {
         });
         return res.data;
     } catch (error) {
-        console.error('Get detail user error:', error.response?.data || error.message);
         throw error;
     }
+}
+
+export const getAllUser = async (access_token) => {
+    try {
+        const res = await axiosJwt.get(`${process.env.REACT_APP_BACKEND_API_URL}/user/getAll/`, {
+            headers: {
+                token: `Bearer ${access_token}`,
+            }
+        });
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const deleteUser = async(id, access_token) => {
+    try {
+        const res = await axiosJwt.delete(`${process.env.REACT_APP_BACKEND_API_URL}/user/delete-user/${id}`, {
+            headers: {
+                token: `Bearer ${access_token}`,
+            }
+        });
+        return res.data;
+    } catch (error) {
+        throw error;
+    }   
 }
 
 export const refreshToken = async () => {
@@ -59,3 +84,4 @@ export const updateUser = async (id, data, access_token) => {
         throw error;
     }
 };
+

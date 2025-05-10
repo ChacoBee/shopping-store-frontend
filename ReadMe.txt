@@ -267,3 +267,5 @@ tiếp theo là thằng search: vô ant design kiếm thằng Customized filter 
 tiếp theo là filter: lấy từ thằng Filter in Tree trong antd xong gán cái filter đó vào chỗ column, chỗ nào muốn filter thỳ gán vô
 
 #43 Xử lý tương tự dữ liệu bên user
+ copy layout của AdminProduct qua AdminUser
+ tạo getAlluser deleteUser trong UserService
