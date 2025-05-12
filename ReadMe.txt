@@ -269,3 +269,16 @@ tiếp theo là filter: lấy từ thằng Filter in Tree trong antd xong gán c
 #43 Xử lý tương tự dữ liệu bên user
  copy layout của AdminProduct qua AdminUser
  tạo getAlluser deleteUser trong UserService
+
+#44 Xử lý tính năng delete many
+
+viết API ở backend trong ProductRouter và UserRouter, DeleteMany router
+
+tạo 1 label ở trên table trong TableCompoentn trong fronend để hiện ra nút deleteall
+vô Productservice và userservice tạo ra 2 cái APi mới là delete many
+
+ở frontend, ở adminProduct và adminUser thỳ tạo các mutationDeletedMany mới cùng với useEffect, ngoài ra cũng tạo handleDeleteManyProduct và handleDeleteManyUser để 
+chạy cái function delete many items
+
+bên backend thỳ nên nhớ lấy const ids = req.body.ids để lấy tất cả selected id
+cuối cùng thỳ gắn handleDeleteMany sau TableComponent để gán lệnh

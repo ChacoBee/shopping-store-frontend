@@ -85,3 +85,16 @@ export const updateUser = async (id, data, access_token) => {
     }
 };
 
+
+export const deleteManyUser = async (data, access_token) => {
+    try {
+        const res = await axiosJwt.post(`${process.env.REACT_APP_BACKEND_API_URL}/user/delete-many`, data,  {
+            headers: {
+                token: `Bearer ${access_token}`,
+            },
+        });
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+};

@@ -56,6 +56,20 @@ const AdminUser = () => {
         },
     );
 
+    const mutationDeletedMany = useMutationHooks(
+        (data) => {
+            const { 
+                token, 
+                ...ids
+                } = data;
+            const res = UserService.deleteManyUser(
+                ids,
+                token,
+            );
+        return res;
+        },
+    );
+
     const mutationDeleted = useMutationHooks(
         (data) => {
             const { 
@@ -101,10 +115,10 @@ const AdminUser = () => {
     }, [form, stateUserDetails]);
 
     useEffect(() =>{
-        if(rowSelected){
+        if(rowSelected && isOpenDrawer){
             fetchUserDetails(rowSelected)
         }
-    }, [rowSelected])
+    }, [rowSelected, isOpenDrawer])
 
     const handleDetailUser = () => {
         if (rowSelected) {
@@ -113,9 +127,19 @@ const AdminUser = () => {
         setIsOpenDrawer(true);
     };
 
+    const handleDeleteManyUser = (ids) =>{
+        mutationDeletedMany.mutate({ids: ids, token: user?.access_token}, {
+            onSettled: () => {
+                queryUser.refetch(); // Refetch the product list after mutation
+            }
+        })
+    }
+
 
     const {data: dataUpdated, isLoading: isLoadingUpdated, isSuccess: isSuccessUpdated, isError: isErrorUpdated} = mutationUpdate;
     const {data: dataDeleted, isLoading: isLoadingDeleted, isSuccess: isSuccessDeleted, isError: isErrorDeleted} = mutationDeleted;
+    const {data: dataDeletedMany, isLoading: isLoadingDeletedMany, isSuccess: isSuccessDeletedMany, isError: isErrorDeletedMany} = mutationDeletedMany;
+
 
     const queryUser = useQuery({
         queryKey: ['user'],
@@ -284,6 +308,14 @@ const AdminUser = () => {
     },[isSuccessDeleted])
 
     useEffect(() =>{
+        if(isSuccessDeletedMany && dataDeletedMany?.status === 'OK') {
+            message.success()
+        }else if(isErrorDeletedMany) {
+            message.error()
+        }
+    },[isSuccessDeletedMany])
+
+    useEffect(() =>{
         if(isSuccessUpdated && dataUpdated?.status === 'OK') {
             message.success()
             handleCloseDrawer()
@@ -398,7 +430,7 @@ const AdminUser = () => {
         <div style={{
             marginTop: '20px',
         }}>
-            <TableComponent columns={columns} isLoading = {isLoadingUsers} data ={dataTable} 
+            <TableComponent handleDeleteMany={handleDeleteManyUser} columns={columns} isLoading = {isLoadingUsers} data ={dataTable} 
                 onRow={(record) => {
                     return {
                         onClick: () => {
