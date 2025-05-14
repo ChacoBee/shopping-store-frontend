@@ -1,5 +1,8 @@
 import { Divider, Radio, Table } from 'antd'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+
 
 const TableComponent = (props) => {
     const {selectionType = 'checkbox', data = [], isLoading = false, columns = [], handleDeleteMany} = props;
@@ -51,6 +54,29 @@ const TableComponent = (props) => {
     const handleDeleteAll = () => {
         handleDeleteMany(rowSelectedKey)
     }
+
+    // Hàm export excel dùng xlsx
+    const exportToExcel = () => {
+      // Lọc bỏ các column không muốn export (ví dụ: dataIndex === 'action')
+      const exportColumns = columns.filter(col => col.dataIndex !== 'action');
+        
+      // Chuyển data thành mảng object đơn giản
+      const exportData = data.map(row => {
+        const obj = {};
+        exportColumns.forEach(col => {
+          obj[col.title] = row[col.dataIndex];
+        });
+        return obj;
+      });
+
+      const worksheet = XLSX.utils.json_to_sheet(exportData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+      const dataBlob = new Blob([excelBuffer], { type: "application/octet-stream" });
+      saveAs(dataBlob, "table.xlsx");
+    };
+
     return (
       <>
         {rowSelectedKey.length > 0 && (
@@ -66,7 +92,10 @@ const TableComponent = (props) => {
             Delete ALl
           </div>
         )}
+        <button onClick={exportToExcel} style={{marginBottom: 10}}>Export Excel</button>
+
           <Table
+              id = "table-xls"
               rowSelection={{ type: selectionType, ...rowSelection }}
               columns={columns}
               dataSource={data}

@@ -282,3 +282,9 @@ chạy cái function delete many items
 
 bên backend thỳ nên nhớ lấy const ids = req.body.ids để lấy tất cả selected id
 cuối cùng thỳ gắn handleDeleteMany sau TableComponent để gán lệnh
+
+
+#45 Xuất data ra file excel trong antd
+đầu tiên là thêm option update address và avatar cho user
+
+tiếp theo là lên gg react-export-table-to-excel

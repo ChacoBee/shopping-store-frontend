@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { WrapperHeader } from './style'
-import { Button, Drawer, Form, Space } from 'antd'
+import { Button, Drawer, Form, Space, Switch } from 'antd'
 import { DeleteOutlined, EditOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import TableComponent from '../TableComponent/TableComponent'
 import InputComponent from '../InputComponent/InputComponent'
@@ -23,18 +23,15 @@ const AdminUser = () => {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
-    const [stateUser, setStateUser] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        isAdmin: false,
-    })
+
 
     const [stateUserDetails, setStateUserDetails] = useState({
         name: '',
         email: '',
         phone: '',
         isAdmin: false,
+        address: '',
+        avatar: '',
     })
 
     const [form] = Form.useForm()
@@ -100,7 +97,9 @@ const AdminUser = () => {
                     name: res.data.name || '',
                     email: res.data.email || '',
                     phone: res.data.phone || '',
-                    isAdmin: res.data.isAdmin || '',
+                    isAdmin: typeof res.data.isAdmin === 'boolean' ? res.data.isAdmin : false,
+                    address: res.data.address || '',
+                    avatar: res.data.avatar || '',
                 });
             } else {
                 console.error('No user details found');
@@ -274,6 +273,11 @@ const AdminUser = () => {
           ...getColumnSearchProps('phone')
         },
         {
+          title: 'Address',
+          dataIndex: 'address',
+          render: (text) => <a>{text}</a>,
+        },
+        {
           title: 'Action',
           dataIndex: 'action',
           render: renderAction
@@ -331,6 +335,8 @@ const AdminUser = () => {
             email: '',
             phone: '',
             isAdmin: false,
+            address: '',
+            avatar: '',
         })
         form.resetFields()
     };
@@ -372,26 +378,17 @@ const AdminUser = () => {
         })
     }
 
-    // const handleOnchangeAvatar = async ({fileList}) => {
-    //     const file = fileList[0]
-    //     if (!file.url && !file.preview) {
-    //         file.preview = await getBase64(file.originFileObj);
-    //     }
-    //     setStateUser({
-    //         ...stateUser,
-    //         image: file.preview,
-    //     })
-    // }
-    // const handleOnchangeAvatarDetails = async ({fileList}) => {
-    //     const file = fileList[0]
-    //     if (!file.url && !file.preview) {
-    //         file.preview = await getBase64(file.originFileObj);
-    //     }
-    //     setStateUser({
-    //         ...stateUserDetails,
-    //         image: file.preview,
-    //     })
-    // } 
+
+    const handleOnchangeAvatarDetails = async ({fileList}) => {
+        const file = fileList[0]
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setStateUserDetails({
+            ...stateUserDetails,
+            avatar: file.preview
+        })
+    } 
 
     const onUpdateUser = () => {
         mutationUpdate.mutate({
@@ -474,18 +471,31 @@ const AdminUser = () => {
                     >
                         <InputComponent values={stateUserDetails.phone} onChange ={handleOnchangeDetails} name = "phone"/>
                     </Form.Item>
-{/* 
                     <Form.Item
-                        label="Image"
-                        name="image"
-                        rules={[{ required: true, message: 'Please input user image' }]}
+                        label="Address"
+                        name="address"
+                        rules={[{ required: true, message: 'Please input user address' }]}
+                    >
+                        <InputComponent values={stateUserDetails.address} onChange ={handleOnchangeDetails} name = "address"/>
+                    </Form.Item>
+                    <Form.Item
+                        label="Admin"
+                        name="isAdmin"
+                        valuePropName="checked"
+                    >
+                        <Switch checked={stateUserDetails.isAdmin} onChange={checked => setStateUserDetails({...stateUserDetails, isAdmin: checked})} />
+                    </Form.Item>
+                    <Form.Item
+                        label="Avatar"
+                        name="avatar"
+                        rules={[{ required: true, message: 'Please input user avatar' }]}
                     > 
                         <WrapperUploadFile onChange={handleOnchangeAvatarDetails} maxCount={1}>
                             <Button>Select File</Button>
-                            {stateUserDetails?.image && (
+                            {stateUserDetails?.avatar && (
                                 <img
-                                    src={stateUserDetails?.image}
-                                    alt="user image"
+                                    src={stateUserDetails?.avatar}
+                                    alt="avatar"
                                     style={{ 
                                         width: '60px', 
                                         height: '60px', 
@@ -497,7 +507,7 @@ const AdminUser = () => {
                                 />
                             )}
                         </WrapperUploadFile>
-                    </Form.Item> */}
+                    </Form.Item>
                     <Form.Item label={null} wrapperCol={{ span: 16, offset: 20 }}>
                         <Button type="primary" htmlType="submit">
                             Update
