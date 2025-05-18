@@ -288,3 +288,12 @@ cuối cùng thỳ gắn handleDeleteMany sau TableComponent để gán lệnh
 đầu tiên là thêm option update address và avatar cho user
 
 tiếp theo là lên gg react-export-table-to-excel
+
+#46 Filter sản phẩm với useDebounce 
+Đầu tiên là diểu chỉnh redux để cho function searchbar cha5 như mong muốn (đổi counterSlide thành productSlice. đổi cách function và var trong đó)
+tiếp theo là sửa trong thằng store.js -> hớ thêm thằng {...props} trong BUttonInputSearch để lấy tất cả các props từ file khác sang 
+r vô thằng header.jsx th2y ngay chỗ BUttonInputSearch thêm thằng onChange vào để hiển tự keyword search khi search sản phẩm
+trong Homepage, tạo 1 useEffect sẽ gọi khi product.
+tạo  const [stateProducts, setStateProducts] = useState([]) trong homepage để hiển thị thông tin sản phẩm ở trang chủ {stateProducts?.map((product)
+
+tiếp theo tạo file useDebounce.js trong hooks r gắn nó vào Homepage

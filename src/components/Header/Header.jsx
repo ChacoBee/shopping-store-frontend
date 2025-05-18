@@ -17,6 +17,8 @@
   import ButtonInputSearch from '../ButtonInputSearch/ButtonInputSearch';
   import { useDispatch, useSelector } from 'react-redux';
   import { resetUser } from '../../redux/slices/userSlice'
+import { searchProduct } from '../../redux/slices/productSlice';
+
 
 
   const Header = ({isHiddenSearch = false, isHiddenCart = false}) => {
@@ -27,6 +29,7 @@
     const [loading, setLoading] = React.useState(false) 
     const [userName, setUserName] = React.useState('')
     const [userAvatar, setUserAvatar] = React.useState('')
+    const [search, setSearch] = React.useState('')
 
     const handleNavigationLogin = () => {
         navigate('/sign-in');
@@ -63,6 +66,12 @@
         <WrapperContentPopup onClick={handleLogout}>Log Out</WrapperContentPopup>
       </div>
     );
+
+    const onSearch = (e) =>{
+      setSearch(e.target.value)
+      dispatch(searchProduct(e.target.value)) ;
+    }
+
     return (
       <div style={{width: '100%', background: '#000', display: 'flex', justifyContent: 'center' }} >
         <WrapperHeader gutter={16} style={{justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset'}}>
@@ -78,6 +87,7 @@
                 placeholder= "Search Your Items"
                 textButton = "Search"
                 variant = "borderless"
+                onChange = {onSearch}
               />
             </Col>
           )}

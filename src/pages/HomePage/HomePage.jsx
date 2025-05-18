@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ProductType from '../../components/ProductType/ProductType'
 import { WrapperButtonMore, WrapperProducts, WrapperTypedProduct } from './style'
 import SliderComponent from '../../components/SliderComponent/SliderComponent'
@@ -15,21 +15,47 @@ import NavbarComponent from '../../components/NavbarComponent/NavbarComponent'
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent'
 import * as ProductService from '../../services/ProductService'
 import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux'
+import { useDebounce } from '../../hooks/useDebounce'
 
 const HomePage = () => {
+
+  const searchProduct = useSelector((state) => state?.product?.search)
+  const refSearch = useRef()
+  const searchDebounce = useDebounce(searchProduct, 1000)
+
+  const [stateProducts, setStateProducts] = useState([])
+
   const arr = ['TV', 'Fridge', 'Laptop']
 
-  const fetchProductAll = async () => {
-    const res = await ProductService.getAllProduct()
-    return res
+  const fetchProductAll = async (search) => {
+    const res = await ProductService.getAllProduct(search)
+    if(search?.length > 0 || refSearch.current){
+      setStateProducts(res?.data)
+    }else{
+      return res
+    }
   }
+
+  useEffect(() =>{
+    if(refSearch.current){
+      fetchProductAll(searchDebounce)
+    }
+    refSearch.current = true
+  },[searchDebounce])
+
   const {isLoading, data: products} = useQuery({
     queryKey: ['product'],
     queryFn: fetchProductAll,
     retry: 3,
     retryDelay: 1000
   });
-  console.log('data', products)
+
+  useEffect(() =>{
+    if(products?.data?.length > 0){
+      setStateProducts(products?.data)
+    }
+  },[products])
 
   return (
     <>
@@ -46,7 +72,7 @@ const HomePage = () => {
         <div id='container' style={{backgroundColor: '#efefef', padding: '0 120px', height: '1000px', width: '100%'}}>
           <SliderComponent arrImage = {[slider1, slider2, slider3, slider4, slider5, slider6]} />
           <WrapperProducts>
-              {products?.data?.map((product) => {
+              {stateProducts?.map((product) => {
                 return(
                   <CardComponent 
                     key={product._id} 
